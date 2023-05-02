@@ -1,0 +1,205 @@
+//1 фрагмент коду
+import java.util.Scanner; 
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Input name: ");
+        String name = "";
+        while (!scan.hasNext("[A-Za-z]+")) { // перевірка, що введено тільки літери
+            System.out.print("Please enter a valid name: ");
+            scan.next();
+        }
+        name = scan.next();
+        System.out.print("Input surname: ");
+        String surname = "";
+        while (!scan.hasNext("[A-Za-z]+")) { // перевірка, що введено тільки літери
+            System.out.print("Please enter a valid surname: ");
+            scan.next();
+        }
+        surname = scan.next();
+ 
+        System.out.print("Input salary: ");
+        double salary = 0;
+        while (!scan.hasNextDouble()) { // перевірка, що введено число з плаваючою крапкою
+            System.out.print("Please enter a valid salary: ");
+            scan.next();
+        }
+        salary = scan.nextDouble();
+ 
+        System.out.print("Input year Started: ");
+        int yearStarted = 0;
+        while (!scan.hasNextInt()) { // перевірка, що введено ціле число
+            System.out.print("Please enter a valid year: ");
+            scan.next();
+        }
+        yearStarted = scan.nextInt();
+ 
+        System.out.print("Input bonus Percent: ");
+        double bonusPercent = 0;
+        while (!scan.hasNextDouble()) { // перевірка, що введено число з плаваючою крапкою
+            System.out.print("Please enter a valid bonus percent: ");
+            scan.next();
+        }
+        bonusPercent = scan.nextDouble();
+ 
+        System.out.print("Input tax: ");
+        double tax = 0;
+        while (!scan.hasNextDouble()) { // перевірка, що введено число з плаваючою крапкою
+            System.out.print("Please enter a valid tax rate: ");
+            scan.next();
+        }
+        tax = scan.nextDouble();
+ 
+        System.out.print("Input days Worked: ");
+        int daysWorked = 0;
+        while (!scan.hasNextInt()) { // перевірка, що введено ціле число
+            System.out.print("Please enter a valid number of days worked: ");
+ 
+        }
+        daysWorked = scan.nextInt();
+        System.out.print("Input days InMonth: ");
+        int daysInMonth = 0;
+        while (!scan.hasNextInt()) { // перевірка, що введено ціле число
+            System.out.print("Please enter a valid number of days in a month: ");
+            scan.next();
+        }
+        daysInMonth = scan.nextInt();
+ 
+        Payment payment = new Payment(surname, name, salary, yearStarted, bonusPercent, tax, daysWorked, daysInMonth);
+ 
+        System.out.print("calculate Accrued: " + payment.calculateAccrued());
+ 
+        System.out.print("\ncalculate Withheld: " + payment.calculateWithheld());
+ 
+        System.out.print("\ncalculate YearsWorked: " + payment.calculateYearsWorked());
+ 
+                 }
+  }
+
+//2 фрагмент коду
+import java.time.LocalDate;
+import java.time.Period;
+ 
+public class Payment {
+    private String surname;
+    private String name;
+    private double salary;
+    private int yearStarted;
+    private double bonusPercent;
+    private double tax;
+    private int daysWorked;
+    private int daysInMonth;
+    private double accrued;
+    private double withheld;
+ 
+    public Payment(String surname, String name, double salary, int yearStarted, double bonusPercent, double tax, int daysWorked, int daysInMonth) {
+        this.surname = surname;
+        this.name = name;
+        this.salary = salary;
+        this.yearStarted = yearStarted;
+        this.bonusPercent = bonusPercent;
+        this.tax = tax; //налог
+        this.daysWorked = daysWorked;
+        this.daysInMonth = daysInMonth;
+    }
+ 
+    public double calculateAccrued() {
+        double bonus = salary * bonusPercent / 100;
+        double dailyRate = salary / daysInMonth;                         //нарахована
+        double earned = daysWorked * dailyRate;
+        return accrued = earned + bonus;
+    }
+ 
+    public double calculateWithheld() {
+        double taxable = salary + (salary * bonusPercent / 100);    //утримана
+        double taxAmount = taxable * tax / 100;
+        return withheld = taxAmount;
+    }
+ 
+    public int calculateYearsWorked() {
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = LocalDate.of(yearStarted, 1, 1);       //відпрацьовані роки
+        Period period = Period.between(startDate, today);
+        return period.getYears();
+    }
+ 
+    public String getSurname() {
+        return surname;
+    }
+ 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public double getSalary() {
+        return salary;
+    }
+ 
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+ 
+    public int getYearStarted() {
+        return yearStarted;
+    }
+ 
+    public void setYearStarted(int yearStarted) {
+        this.yearStarted = yearStarted;
+    }
+ 
+    public double getBonusPercent() {
+        return bonusPercent;
+    }
+ 
+    public void setBonusPercent(double bonusPercent) {
+        this.bonusPercent = bonusPercent;
+    }
+ 
+    public double getTax() {
+        return tax;
+    }
+ 
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+ 
+    public int getDaysWorked() {
+        return daysWorked;
+    }
+ 
+    public void setDaysWorked(int daysWorked) {
+        this.daysWorked = daysWorked;
+    }
+ 
+    public int getDaysInMonth() {
+        return daysInMonth;
+    }
+ 
+    public void setDaysInMonth(int daysInMonth) {
+        this.daysInMonth = daysInMonth;
+    }
+ 
+    public double getAccrued() {
+        return accrued;
+    }
+ 
+    public void setAccrued(double accrued) {
+        this.accrued = accrued;
+    }
+ 
+    public double getWithheld() {
+        return withheld;
+    }
+ 
+    public void setWithheld(double withheld) {
+        this.withheld = withheld;
+    }
+}
