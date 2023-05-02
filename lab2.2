@@ -1,0 +1,79 @@
+//1 фрагмент коду
+import java.util.Scanner;
+import java.util.InputMismatchException;
+ 
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Input baseSide: ");
+        double baseSide = 0;
+        while (true) { // Цикл чи правильно введені дані
+            try {
+                baseSide = scan.nextDouble();
+                break;
+            } catch (InputMismatchException e) { // Виключення
+                System.out.print("Please enter a valid number for the base side: ");
+                scan.next();
+            }
+        }
+        System.out.print("Input height: ");
+        double height = 0;
+        while (true) { // Цикл чи правильно введені дані
+            try {
+                height = scan.nextDouble();
+                break;
+            } catch (InputMismatchException e) { // Виключення
+                System.out.print("Please enter a valid number for the height: ");
+                scan.next();
+            }
+        }
+        Prisma prisma = new Prisma(baseSide, height);
+ 
+        System.out.print("Lateral Area: " + prisma.lateralArea());
+        System.out.println("\nVolume: " + prisma.volume());
+ 
+    }
+}
+
+
+
+//2 фрагмент коду
+
+public class Prisma {
+    private double baseSide;
+    private double height;
+ 
+    public Prisma(double baseSide, double height) {
+        this.baseSide = baseSide;
+        this.height = height;
+    }
+ 
+    public double lateralArea() {
+        double apothem = baseSide / (2 * Math.tan(Math.PI / 3)); // Апофема
+        double lateralSide = Math.sqrt(Math.pow(height, 2) + Math.pow(apothem, 2)); // Бічна сторона призми
+        return 3 * baseSide * lateralSide; // Бічна площа призми
+    }
+ 
+    public double volume() {
+        double apothem = baseSide / (2 * Math.tan(Math.PI / 3)); // Апофема
+        double baseArea = Math.sqrt(3) / 4 * Math.pow(baseSide, 2); // Площа основи трикутника
+        return baseArea * height; // Об'єм призми
+    }
+ 
+    public double getBaseSide() {
+        return baseSide;
+    }
+ 
+    public void setBaseSide(double baseSide) {
+        this.baseSide = baseSide;
+    }
+ 
+    public double getHeight() {
+        return height;
+    }
+ 
+    public void setHeight(double height) {
+        this.height = height;
+    }
+}
+
